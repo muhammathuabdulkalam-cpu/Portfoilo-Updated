@@ -695,14 +695,15 @@
         .btn-glass-pill {
             display: flex !important;
             align-items: center !important;
-            gap: 12px !important;
-            padding: 10px 24px !important;
-            height: 52px !important;
+            justify-content: center !important;
+            gap: 10px !important;
+            padding: 8px 20px !important;
+            height: 40px !important;
             border-radius: 50px !important;
             font-family: 'Orbitron', sans-serif;
-            font-size: 0.8rem !important;
+            font-size: 0.75rem !important;
             font-weight: 600 !important;
-            letter-spacing: 2px !important;
+            letter-spacing: 1.5px !important;
             text-decoration: none !important;
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
             backdrop-filter: blur(10px) !important;
@@ -2170,7 +2171,7 @@
 
                     <div class="hero-stats">
                         <div class="stat-item">
-                            <div class="stat-number">500+</div>
+                            <div class="stat-number" data-count="500" data-suffix="+">0+</div>
                             <div class="stat-label">Animations</div>
                         </div>
                         <div class="stat-item">
@@ -2346,16 +2347,13 @@
                             <span class="tag">React Native</span>
                             <span class="tag">Fullstack</span>
                         </div>
-                        <div
+                        <div class="project-actions"
                             style="margin-top: auto; display: flex; gap: 0.8rem; flex-wrap: wrap; padding-top: 1.5rem;">
-                            <a href="https://gym-tracker-1-8n34.onrender.com/" target="_blank" class="btn-glass-pill"
-                                style="padding: 8px 16px !important; font-size: 0.7rem !important; height: 38px !important;">LIVE</a>
+                            <a href="https://gym-tracker-1-8n34.onrender.com/" target="_blank" class="btn-glass-pill">LIVE</a>
                             <a href="https://github.com/Afzal-4/m-portfolio-v1-mern" target="_blank"
-                                class="btn-glass-pill"
-                                style="padding: 8px 16px !important; font-size: 0.7rem !important; height: 38px !important;">GITHUB</a>
+                                class="btn-glass-pill">GITHUB</a>
                             <a href="https://expo.dev/accounts/thouficafzals-organization/projects/gym-app/builds/8bb28f4f-9dec-493e-9802-b8ff7ac718a0"
-                                target="_blank" class="btn-glass-pill"
-                                style="padding: 8px 16px !important; font-size: 0.7rem !important; height: 38px !important;">APP</a>
+                                target="_blank" class="btn-glass-pill">APP</a>
                         </div>
                     </div>
                 </div>
@@ -2380,10 +2378,9 @@
                             <span class="tag">Animation</span>
                             <span class="tag">Microsoft</span>
                         </div>
-                        <div
+                        <div class="project-actions"
                             style="margin-top: auto; display: flex; gap: 0.8rem; flex-wrap: wrap; padding-top: 1.5rem;">
-                            <a href="#contact" class="btn-glass-pill"
-                                style="padding: 8px 16px !important; font-size: 0.7rem !important; height: 38px !important;">LIVE</a>
+                            <!-- Project focused on system architecture -->
                         </div>
                     </div>
                 </div>
@@ -2408,10 +2405,9 @@
                             <span class="tag">Automation</span>
                             <span class="tag">SaaS</span>
                         </div>
-                        <div
+                        <div class="project-actions"
                             style="margin-top: auto; display: flex; gap: 0.8rem; flex-wrap: wrap; padding-top: 1.5rem;">
-                            <a href="#contact" class="btn-glass-pill"
-                                style="padding: 8px 16px !important; font-size: 0.7rem !important; height: 38px !important;">LIVE</a>
+                            <!-- Automation platform architecture -->
                         </div>
                     </div>
                 </div>
@@ -2435,10 +2431,9 @@
                             <span class="tag">Education</span>
                             <span class="tag">Realtime</span>
                         </div>
-                        <div
+                        <div class="project-actions"
                             style="margin-top: auto; display: flex; gap: 0.8rem; flex-wrap: wrap; padding-top: 1.5rem;">
-                            <a href="#contact" class="btn-glass-pill"
-                                style="padding: 8px 16px !important; font-size: 0.7rem !important; height: 38px !important;">LIVE</a>
+                            <!-- Real-time management architecture -->
                         </div>
                     </div>
                 </div>
@@ -2463,10 +2458,9 @@
                             <span class="tag">Responsive</span>
                             <span class="tag">Architecture</span>
                         </div>
-                        <div
+                        <div class="project-actions"
                             style="margin-top: auto; display: flex; gap: 0.8rem; flex-wrap: wrap; padding-top: 1.5rem;">
-                            <a href="#contact" class="btn-glass-pill"
-                                style="padding: 8px 16px !important; font-size: 0.7rem !important; height: 38px !important;">LIVE</a>
+                            <!-- Communication module architecture -->
                         </div>
                     </div>
                 </div>
@@ -2940,15 +2934,35 @@
                 ease: "power2.out"
             }, "-=0.2");
 
+            // Optimized Fast Counter Animation (Scroll-Triggered)
+            gsap.utils.toArray(".stat-number[data-count]").forEach(el => {
+                const target = +el.dataset.count;
+                const suffix = el.dataset.suffix || "";
+                
+                gsap.to({ val: 0 }, {
+                    val: target,
+                    duration: 0.8, // Full fast as requested
+                    ease: "power2.out",
+                    scrollTrigger: {
+                        trigger: el,
+                        start: "top 90%",
+                        once: true
+                    },
+                    onUpdate: function() {
+                        el.textContent = Math.round(this.targets()[0].val) + suffix;
+                    }
+                });
+            });
+
             // Key Projects Reveal
             gsap.from("#projects .section-title", {
                 scrollTrigger: {
                     trigger: "#projects",
                     start: "top 80%"
                 },
-                x: -100,
+                y: -60,
                 opacity: 0,
-                duration: 1.2,
+                duration: 0.6,
                 ease: "expo.out",
                 clearProps: "all"
             });
@@ -2983,7 +2997,7 @@
                         trigger: section,
                         start: "top 85%"
                     },
-                    x: index % 2 === 0 ? -80 : 80,
+                    y: -60,
                     opacity: 0,
                     duration: 0.6,
                     ease: "expo.out",
